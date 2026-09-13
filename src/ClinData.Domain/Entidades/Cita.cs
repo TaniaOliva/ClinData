@@ -1,3 +1,5 @@
+using ClinData.Domain.Enums;
+
 namespace ClinData.Domain.Entities;
 
 public class Cita
@@ -10,10 +12,9 @@ public class Cita
 
     public string Motivo { get; set; } = string.Empty;
 
-    public string Estado { get; set; } = "Agendada";
+    public EstadoCita Estado { get; set; } = EstadoCita.Programada;
 
     public Paciente? Paciente { get; set; }
 
-    public ICollection<NotaClinica> NotasClinicas { get; set; }
-        = new List<NotaClinica>();
+    public NotaClinica? NotaClinica { get; set; }
 }
