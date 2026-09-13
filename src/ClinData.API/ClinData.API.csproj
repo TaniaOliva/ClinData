@@ -10,4 +10,9 @@
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="11.0.0-preview.6.26359.118" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ClinData.Application\ClinData.Application.csproj" />
+    <ProjectReference Include="..\ClinData.Infrastructure\ClinData.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
