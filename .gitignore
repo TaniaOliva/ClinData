@@ -429,4 +429,4 @@ FodyWeavers.xsd
 *.msp
 
 # End of file
-.configuraciones
+*.configuraciones
