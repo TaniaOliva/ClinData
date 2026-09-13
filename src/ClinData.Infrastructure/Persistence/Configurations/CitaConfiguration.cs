@@ -13,7 +13,8 @@ public class CitaConfiguration : IEntityTypeConfiguration<Cita>
             .HasMaxLength(300);
 
         builder.Property(cita => cita.Estado)
-            .HasConversion<string>();
+            .HasConversion<string>()
+            .HasMaxLength(20);
 
         builder.HasOne(cita => cita.Paciente)
             .WithMany(paciente => paciente.Citas)
