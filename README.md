@@ -17,3 +17,12 @@ dotnet new classlib -n ClinData.Domain
 dotnet new classlib -n ClinData.Application
 dotnet new classlib -n ClinData.Infrastructure
 dotnet new webapi --use-controllers -n ClinData.API
+
+# Agregaremos los proyectos a la Solucion
+
+dotnet sln ClinData.slnx add src/ClinData.Domain/ClinData.Domain.csproj
+dotnet sln ClinData.slnx add src/ClinData.Application/ClinData.Application.csproj
+dotnet sln ClinData.slnx add src/ClinData.Application/ClinData.Application.csproj
+dotnet sln ClinData.slnx add src/ClinData.API/ClinData.API.csproj
+
+# Configuracion de las Referencias 

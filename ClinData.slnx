@@ -1,2 +1,8 @@
 <Solution>
+  <Folder Name="/src/">
+    <Project Path="src/ClinData.API/ClinData.API.csproj" />
+    <Project Path="src/ClinData.Application/ClinData.Application.csproj" />
+    <Project Path="src/ClinData.Domain/ClinData.Domain.csproj" />
+    <Project Path="src/ClinData.Infrastructure/ClinData.Infrastructure.csproj" />
+  </Folder>
 </Solution>
