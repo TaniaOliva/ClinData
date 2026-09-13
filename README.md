@@ -21,6 +21,11 @@ El proyecto utiliza una arquitectura N-Capas:
 - Git / GitHub
 - Postman
 
+## Librerías usadas
+
+- `Microsoft.EntityFrameworkCore.SqlServer`: permite conectar Entity Framework Core con SQL Server.
+- `Microsoft.EntityFrameworkCore.Design`: proporciona herramientas de diseño para crear migraciones de EF Core.
+
 ## Entidades principales
 
 - Paciente
