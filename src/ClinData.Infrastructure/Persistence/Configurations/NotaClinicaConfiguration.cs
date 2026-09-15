@@ -20,10 +20,5 @@ public class NotaClinicaConfiguration : IEntityTypeConfiguration<NotaClinica>
             .WithOne()
             .HasForeignKey<NotaClinica>(nota => nota.CitaId)
             .OnDelete(DeleteBehavior.Restrict);
-
-        builder.HasOne(nota => nota.Paciente)
-            .WithMany()
-            .HasForeignKey(nota => nota.PacienteId)
-            .OnDelete(DeleteBehavior.Restrict);
     }
 }
