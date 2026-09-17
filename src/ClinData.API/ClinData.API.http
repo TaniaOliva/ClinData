@@ -1,11 +1,11 @@
-@ClinData.API_HostAddress = http://localhost:5189
+@ClinData_API_HostAddress = http://localhost:5189
 
-GET {{ClinData.API_HostAddress}}/openapi/v1.json
+GET {{ClinData_API_HostAddress}}/openapi/v1.json
 Accept: application/json
 
 ###
 
-GET {{ClinData.API_HostAddress}}/weatherforecast/
+GET {{ClinData_API_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###

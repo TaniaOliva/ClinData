@@ -4,11 +4,11 @@
 
 namespace ClinData.Application.DTOs.Pacientes;
 
-public class CreatePacienteDto
+public class CreacionPacienteDto
 {
-    public string Nombres { get; set; } = string.Empty;
+    public string Nombre { get; set; } = string.Empty;
 
-    public string Apellidos { get; set; } = string.Empty;
+    public string Apellido { get; set; } = string.Empty;
 
     public string Sexo { get; set; } = string.Empty;
 
