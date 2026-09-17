@@ -34,9 +34,8 @@ public class PacienteValidator
         var PatronIdentidad = @"^\d{4}-\d{4}-\d{5}$";  
         if (!Regex.IsMatch(dto.Identidad, PatronIdentidad))
         {
-            errores.Add("La identidad no es válida.");
+            errores.Add("La identidad no es válida el formato debe ser Hondureño: ####-####-#####.");
         }
-    
         else
         {
             var existe = await _pacienteRepository
@@ -49,7 +48,6 @@ public class PacienteValidator
             }
 
         }
-
     }
     return errores;
 
