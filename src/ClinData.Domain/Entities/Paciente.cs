@@ -19,4 +19,5 @@ public class Paciente
     public DateTime FechaRegistro { get; set; } = DateTime.UtcNow;
 
     public ICollection<Cita> Citas { get; set; } = new List<Cita>();
+    
 }
