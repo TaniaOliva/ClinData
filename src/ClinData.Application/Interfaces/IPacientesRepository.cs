@@ -4,6 +4,7 @@ namespace ClinData.Application.Interfaces;
 
 public interface IPacienteRepository
 {
+
     Task<Paciente?> GetByIdAsync(int id);
 
     Task<Paciente?> GetByIdentidadAsync(string identidad);
