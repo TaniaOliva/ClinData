@@ -10,12 +10,15 @@ public class PacienteService
 {
     private readonly IPacienteRepository _pacienteRepository;
     private readonly PacienteValidator _pacienteValidator;
+    private readonly INotaClinicaRepository _notaClinicaRepository;
 
     public PacienteService(
         IPacienteRepository pacienteRepository,
+        INotaClinicaRepository notaClinicaRepository,
         PacienteValidator pacienteValidator)
     {
         _pacienteRepository = pacienteRepository;
+        _notaClinicaRepository = notaClinicaRepository;
         _pacienteValidator = pacienteValidator;
     }
 
@@ -44,5 +47,28 @@ public class PacienteService
         await _pacienteRepository.SaveChangesAsync();
 
         return (true, new List<string>(), paciente);
+    }
+
+    public async Task<IEnumerable<Paciente>> ObtenerTodosAsync()
+    {
+        return await _pacienteRepository.GetAllAsync();
+    }
+
+    public async Task<Paciente?> ObtenerPorIdAsync(int id)
+    {
+        return await _pacienteRepository.GetByIdAsync(id);
+    }
+
+    public async Task<IEnumerable<NotaClinica>?> ObtenerNotasAsync(int pacienteId)
+    {
+        var paciente = await _pacienteRepository.GetByIdAsync(pacienteId);
+
+        if (paciente is null)
+        {
+            return null;
+        }
+
+        return await _notaClinicaRepository
+            .ObtenerPorPacienteIdAsync(pacienteId);
     }
 }
