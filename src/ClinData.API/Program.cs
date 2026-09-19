@@ -1,5 +1,7 @@
 using ClinData.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using ClinData.Application.Services;
+using ClinData.Infrastructure.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +10,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddDbContext<ClinDataDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ClinData")));
+builder.Services.AddInfrastructure();
+builder.Services.AddScoped<PacienteService>();
+
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
