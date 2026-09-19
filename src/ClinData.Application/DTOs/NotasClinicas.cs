@@ -1,7 +1,6 @@
-
 namespace ClinData.Application.DTOs.NotasClinicas;
 
-public class CreateNotaClinicaDto
+public class CreacionNotaClinicaDto
 {
     public int CitaId { get; set; }
 

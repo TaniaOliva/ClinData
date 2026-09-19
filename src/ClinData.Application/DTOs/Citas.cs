@@ -1,8 +1,6 @@
-
-
 namespace ClinData.Application.DTOs.Citas;
 
-public class CreateCitaDto
+public class CreacionCitaDto
 {
     public int PacienteId { get; set; }
 

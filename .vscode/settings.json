@@ -1,0 +1,14 @@
+{
+  "dotnet.defaultSolution": "ClinData.slnx",
+  "dotnetAcquisitionExtension.sharedExistingDotnetPath": "C:\\Program Files\\dotnet\\dotnet.exe",
+  "dotnetAcquisitionExtension.existingDotnetPath": [
+    {
+      "extensionId": "ms-dotnettools.csharp",
+      "path": "C:\\Program Files\\dotnet\\dotnet.exe"
+    },
+    {
+      "extensionId": "ms-dotnettools.csdevkit",
+      "path": "C:\\Program Files\\dotnet\\dotnet.exe"
+    }
+  ]
+}
