@@ -10,8 +10,11 @@ public static class ServiceExtensions
         this IServiceCollection services)
     {
         services.AddScoped<PacienteValidator>();
+        services.AddScoped<NotaClinicaValidator>();
 
         services.AddScoped<PacienteService>();
+        services.AddScoped<NotaClinicaService>();
+        services.AddScoped<CitaService>();
 
         return services;
     }

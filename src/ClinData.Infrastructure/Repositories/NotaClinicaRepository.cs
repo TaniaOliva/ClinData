@@ -23,4 +23,20 @@ public class NotaClinicaRepository : INotaClinicaRepository
             .OrderByDescending(nota => nota.FechaHoraRegistro)
             .ToListAsync();
     }
+
+    public async Task<NotaClinica?> GetByIdAsync(int id)
+    {
+        return await _dbContext.NotasClinicas
+            .FirstOrDefaultAsync(nota => nota.Id == id);
+    }
+
+    public async Task AddAsync(NotaClinica nota)
+    {
+        await _dbContext.NotasClinicas.AddAsync(nota);
+    }
+
+    public async Task SaveChangesAsync()
+    {
+        await _dbContext.SaveChangesAsync();
+    }
 }
