@@ -16,12 +16,12 @@ public class PacienteValidator
   {
       var errores = new List<string>();
 
-      if (string.IsNullOrWhiteSpace(dto.Nombre))
+      if (string.IsNullOrWhiteSpace(dto.Nombres))
       {
           errores.Add("El nombre es obligatorio.");
       }
 
-      if (string.IsNullOrWhiteSpace(dto.Apellido))
+      if (string.IsNullOrWhiteSpace(dto.Apellidos))
       {
           errores.Add("El apellido es obligatorio.");
       }

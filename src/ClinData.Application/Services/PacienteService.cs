@@ -34,8 +34,8 @@ public class PacienteService
 
         var paciente = new Paciente
         {
-            Nombres = dto.Nombre.Trim(),
-            Apellidos = dto.Apellido.Trim(),
+            Nombres = dto.Nombres.Trim(),
+            Apellidos = dto.Apellidos.Trim(),
             Sexo = dto.Sexo.Trim(),
             Identidad = dto.Identidad.Trim(),
             FechaNacimiento = dto.FechaNacimiento,

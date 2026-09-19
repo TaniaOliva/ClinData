@@ -1,5 +1,4 @@
 using ClinData.Application.Interfaces;
-using ClinData.Application.Validators;
 using ClinData.Infrastructure.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -13,8 +12,6 @@ public static class ServiceExtensions
     {
         services.AddScoped<IPacienteRepository, PacienteRepository>();
         services.AddScoped<INotaClinicaRepository, NotaClinicaRepository>();
-
-        services.AddScoped<PacienteValidator>();
 
         return services;
     }
