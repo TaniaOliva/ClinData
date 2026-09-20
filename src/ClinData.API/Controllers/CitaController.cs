@@ -4,8 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ClinData.API.Controllers;
 
-// TEMPORAL: alta minima de citas, sin validador, para poder registrar
-// notas clinicas. Se reemplaza cuando se construya el slice de Citas.
 [ApiController]
 [Route("api/citas")]
 public class CitaController : ControllerBase
@@ -33,5 +31,32 @@ public class CitaController : ControllerBase
         }
 
         return Created($"/api/citas/{resultado.Cita.Id}", resultado.Cita);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> ObtenerPorFecha(
+        [FromQuery] DateOnly? fecha)
+    {
+        if (fecha is null)
+        {
+            return BadRequest(new { mensaje = "La fecha es obligatoria." });
+        }
+
+        var citas = await _citaService.ObtenerPorFechaAsync(fecha.Value);
+
+        return Ok(citas);
+    }
+
+    [HttpGet("{id:int}")]
+    public async Task<IActionResult> ObtenerPorId(int id)
+    {
+        var cita = await _citaService.ObtenerPorIdAsync(id);
+
+        if (cita is null)
+        {
+            return NotFound();
+        }
+
+        return Ok(cita);
     }
 }

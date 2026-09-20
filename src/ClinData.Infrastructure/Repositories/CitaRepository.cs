@@ -20,6 +20,19 @@ public class CitaRepository : ICitaRepository
             .FirstOrDefaultAsync(cita => cita.Id == id);
     }
 
+    public async Task<IEnumerable<Cita>> ObtenerPorFechaAsync(DateOnly fecha)
+    {
+        var inicio = fecha.ToDateTime(TimeOnly.MinValue);
+        var fin = inicio.AddDays(1);
+
+        return await _dbContext.Citas
+            .AsNoTracking()
+            .Where(cita => cita.FechaHora >= inicio &&
+                        cita.FechaHora < fin)
+            .OrderBy(cita => cita.FechaHora)
+            .ToListAsync();
+    }
+
     public async Task AgregarAsync(Cita cita)
     {
         await _dbContext.Citas.AddAsync(cita);

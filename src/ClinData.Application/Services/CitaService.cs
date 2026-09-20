@@ -41,4 +41,14 @@ public class CitaService
 
         return (true, new List<string>(), cita);
     }
+
+    public async Task<Cita?> ObtenerPorIdAsync(int id)
+    {
+        return await _citaRepository.ObtenerPorIdAsync(id);
+    }
+
+    public async Task<IEnumerable<Cita>> ObtenerPorFechaAsync(DateOnly fecha)
+    {
+        return await _citaRepository.ObtenerPorFechaAsync(fecha);
+    }
 }
