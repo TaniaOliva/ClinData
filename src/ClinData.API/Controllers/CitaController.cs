@@ -20,8 +20,18 @@ public class CitaController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Crear(CreacionCitaDto dto)
     {
-        var cita = await _citaService.CrearCitaAsync(dto);
+        var resultado = await _citaService.CrearCitaAsync(dto);
 
-        return Created($"/api/citas/{cita.Id}", cita);
+        if (!resultado.Exitoso)
+        {
+            return BadRequest(resultado.Errores);
+        }
+
+        if (resultado.Cita is null)
+        {
+            return StatusCode(500, "No se pudo crear la cita.");
+        }
+
+        return Created($"/api/citas/{resultado.Cita.Id}", resultado.Cita);
     }
 }

@@ -11,8 +11,8 @@ public static class ServiceExtensions
         this IServiceCollection services)
     {
         services.AddScoped<IPacienteRepository, PacienteRepository>();
-        services.AddScoped<INotaClinicaRepository, NotaClinicaRepository>();
         services.AddScoped<ICitaRepository, CitaRepository>();
+        services.AddScoped<INotaClinicaRepository, NotaClinicaRepository>();
 
         return services;
     }
