@@ -4,9 +4,13 @@ namespace ClinData.Application.Interfaces;
 
 public interface ICitaRepository
 {
-    Task<Cita?> GetByIdAsync(int id);
+    Task<Cita?> ObtenerPorIdAsync(int id);
 
-    Task AddAsync(Cita cita);
+    Task<bool> ExisteCitaMismoHorarioAsync(
+        int pacienteId,
+        DateTime fechaHora);
 
-    Task SaveChangesAsync();
+    Task AgregarAsync(Cita cita);
+
+    Task GuardarCambiosAsync();
 }

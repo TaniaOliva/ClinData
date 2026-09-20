@@ -7,13 +7,12 @@ namespace ClinData.Infrastructure.DependencyInjection;
 
 public static class ServiceExtensions
 {
-    public static IServiceCollection AddInfrastructure(
-        this IServiceCollection services)
-    {
-        services.AddScoped<IPacienteRepository, PacienteRepository>();
-        services.AddScoped<INotaClinicaRepository, NotaClinicaRepository>();
-        services.AddScoped<ICitaRepository, CitaRepository>();
+   public static IServiceCollection AddInfrastructure(
+    this IServiceCollection services)
+{
+    services.AddScoped<IPacienteRepository, PacienteRepository>();
+    services.AddScoped<ICitaRepository, CitaRepository>();
+    services.AddScoped<INotaClinicaRepository, NotaClinicaRepository>();
 
-        return services;
-    }
+    return services;
 }

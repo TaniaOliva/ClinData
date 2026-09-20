@@ -14,18 +14,24 @@ public class CitaRepository : ICitaRepository
         _dbContext = dbContext;
     }
 
-    public async Task<Cita?> GetByIdAsync(int id)
+    public async Task<Cita?> ObtenerPorIdAsync(int id)
     {
         return await _dbContext.Citas
             .FirstOrDefaultAsync(cita => cita.Id == id);
     }
 
-    public async Task AddAsync(Cita cita)
+    public async Task AgregarAsync(Cita cita)
     {
         await _dbContext.Citas.AddAsync(cita);
     }
 
-    public async Task SaveChangesAsync()
+    public async Task<bool> ExisteCitaMismoHorarioAsync(int pacienteId, DateTime fechaHora)
+    {
+        return await _dbContext.Citas
+            .AnyAsync(cita => cita.PacienteId == pacienteId && cita.FechaHora == fechaHora);
+    }
+
+    public async Task GuardarCambiosAsync()
     {
         await _dbContext.SaveChangesAsync();
     }

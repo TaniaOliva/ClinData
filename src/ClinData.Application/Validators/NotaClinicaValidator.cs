@@ -7,36 +7,50 @@ public class NotaClinicaValidator
 {
     private readonly ICitaRepository _citaRepository;
 
-    public NotaClinicaValidator(ICitaRepository citaRepository)
+    public NotaClinicaValidator(
+        ICitaRepository citaRepository)
     {
         _citaRepository = citaRepository;
     }
 
-    public async Task<List<string>> CreacionNotaClinicaAsync(
+    public async Task<List<string>> ValidarCreacionAsync(
         CreacionNotaClinicaDto dto)
     {
         var errores = new List<string>();
 
-        if (string.IsNullOrWhiteSpace(dto.Texto))
-        {
-            errores.Add("El texto de la nota es obligatorio.");
-        }
-
-        if (string.IsNullOrWhiteSpace(dto.RegistradaPor))
-        {
-            errores.Add("El campo RegistradaPor es obligatorio.");
-        }
-
-        var cita = await _citaRepository.GetByIdAsync(dto.CitaId);
-
-        if (cita is null)
-        {
-            errores.Add("La cita indicada no existe.");
-        }
-        else if (cita.FechaHora >= DateTime.UtcNow)
+        // 1. Validar CitaId
+        if (dto.CitaId <= 0)
         {
             errores.Add(
-                "No se puede registrar una nota sobre una cita que aun no ha ocurrido.");
+                "La cita asociada es obligatoria.");
+
+            return errores;
+        }
+
+        // 2. Verificar que exista la cita
+        var cita = await _citaRepository
+            .ObtenerPorIdAsync(dto.CitaId);
+
+        if (cita == null)
+        {
+            errores.Add(
+                "La cita asociada no existe.");
+
+            return errores;
+        }
+
+        // 3. La cita debe haber ocurrido
+        if (cita.FechaHora > DateTime.Now)
+        {
+            errores.Add(
+                "No se puede registrar una nota clínica porque la cita todavía no ha ocurrido.");
+        }
+
+        // 4. Toda nota debe indicar quién la escribió
+        if (string.IsNullOrWhiteSpace(dto.EscritoPor))
+        {
+            errores.Add(
+                "Debe indicar quién escribió la nota clínica.");
         }
 
         return errores;
