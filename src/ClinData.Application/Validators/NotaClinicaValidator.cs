@@ -13,7 +13,13 @@ public class NotaClinicaValidator
         _citaRepository = citaRepository;
     }
 
-    public async Task<List<string>> ValidarCreacionAsync(
+    public Task<List<string>> CreacionNotaClinicaAsync(
+        CreacionNotaClinicaDto dto)
+    {
+        return ValidarCreacionAsync(dto);
+    }
+
+    private async Task<List<string>> ValidarCreacionAsync(
         CreacionNotaClinicaDto dto)
     {
         var errores = new List<string>();
@@ -47,7 +53,7 @@ public class NotaClinicaValidator
         }
 
         // 4. Toda nota debe indicar quién la escribió
-        if (string.IsNullOrWhiteSpace(dto.EscritoPor))
+        if (string.IsNullOrWhiteSpace(dto.RegistradaPor))
         {
             errores.Add(
                 "Debe indicar quién escribió la nota clínica.");
