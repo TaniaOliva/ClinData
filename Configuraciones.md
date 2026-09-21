@@ -41,3 +41,103 @@ dotnet add src/ClinData.API/ClinData.API.csproj reference src/ClinData.Applicati
 
 # API hace Referencia a Infraestructure
 dotnet add src/ClinData.API/ClinData.API.csproj reference src/ClinData.Infrastructure/ClinData.Infrastructure.csproj
+
+# Para Manejo de Secretos Locales
+dotnet user-secrets init --project src/ClinData.API
+
+# Para hacer conexcion a Azur Data base con secrets 
+dotnet user-secrets set "ConnectionStrings:ClinDataConnection" "Server=tcp:clindata-sql-server.database.windows.net,1433;Initial Catalog=ClinDataDb;Persist Security Info=False;User ID=dbclindata;Password=TU_PASSWORD_REAL;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;" --project src/ClinData.API
+
+# Comprobando que se Guardo 
+dotnet user-secrets list --project src/ClinData.API
+
+# Verificacion de Paquetes intalados 
+dotnet list src/ClinData.Infrastructure package
+
+## Onboarding rapido para cualquier integrante del repo
+
+Objetivo: que cualquier persona del equipo pueda levantar la API y probar endpoints contra Azure SQL.
+
+### 1. Prerrequisitos
+
+- Tener .NET SDK instalado (idealmente net10 para este proyecto).
+- Tener acceso al repositorio.
+- Tener connection string de Azure SQL valida.
+- Tener su IP habilitada en el firewall del SQL Server de Azure.
+
+### 2. Restaurar y compilar
+
+```bash
+cd '/Users/salyluz/Desktop/Universidad/AV #2/ClinData'
+dotnet restore
+dotnet build
+```
+
+### 3. Configurar secretos locales (no guardar password en el repo)
+
+```bash
+dotnet user-secrets init --project src/ClinData.API
+dotnet user-secrets set "ConnectionStrings:ClinData" "Server=tcp:clindata-sql-server.database.windows.net,1433;Initial Catalog=ClinDataDb;Persist Security Info=False;User ID=dbclindata;Password=TU_PASSWORD_REAL;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;" --project src/ClinData.API
+dotnet user-secrets list --project src/ClinData.API
+```
+
+Nota: la clave correcta es `ConnectionStrings:ClinData`.
+
+### 4. Habilitar IP en Azure SQL Server
+
+Si aparece error `Error Number:40615` o mensaje `Client with IP address ... is not allowed`:
+
+1. Ir a Azure Portal -> SQL Server `clindata-sql-server`.
+2. Abrir `Networking`.
+3. Clic en `Add client IPv4 address`.
+4. Guardar y esperar 1-5 minutos.
+
+### 5. Aplicar migraciones (crear tablas en Azure)
+
+```bash
+dotnet ef database update --project src/ClinData.Infrastructure --startup-project src/ClinData.API
+```
+
+Si no existe `dotnet-ef`:
+
+```bash
+dotnet tool install --global dotnet-ef
+```
+
+### 6. Ejecutar API
+
+```bash
+dotnet run --project src/ClinData.API/ClinData.API.csproj
+```
+
+### 7. Prueba minima de endpoints
+
+1. Listar pacientes:
+
+```bash
+curl -i http://localhost:5189/api/pacientes
+```
+
+2. Crear paciente:
+
+```bash
+curl -i -X POST http://localhost:5189/api/pacientes \
+	-H "Content-Type: application/json" \
+	-d '{
+		"nombres":"Pedro",
+		"apellidos":"Lopez",
+		"sexo":"M",
+		"identidad":"0801-2000-12345",
+		"fechaNacimiento":"2000-05-10T00:00:00",
+		"telefono":"99999999"
+	}'
+```
+
+3. Volver a listar pacientes para confirmar persistencia en Azure SQL.
+
+### 8. Recomendacion para trabajo en equipo
+
+- No subir cadenas de conexion con password al repo.
+- Cada integrante configura su secreto local.
+- Si alguien cambia de red, debe re-autorizar su IP en Azure SQL.
+

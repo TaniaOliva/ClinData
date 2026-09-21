@@ -3,9 +3,10 @@ using Microsoft.EntityFrameworkCore;
 using ClinData.Application.DependencyInjection;
 using ClinData.Infrastructure.DependencyInjection;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// agregar servicios al contenedor.
 
 builder.Services.AddControllers();
 builder.Services.AddDbContext<ClinDataDbContext>(options =>
