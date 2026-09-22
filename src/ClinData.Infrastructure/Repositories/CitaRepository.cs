@@ -20,15 +20,14 @@ public class CitaRepository : ICitaRepository
             .FirstOrDefaultAsync(cita => cita.Id == id);
     }
 
-    public async Task<IEnumerable<Cita>> ObtenerPorFechaAsync(DateOnly fecha)
+    public async Task<IEnumerable<Cita>> ObtenerEntreAsync(
+        DateTime inicioUtc,
+        DateTime finUtc)
     {
-        var inicio = fecha.ToDateTime(TimeOnly.MinValue);
-        var fin = inicio.AddDays(1);
-
         return await _dbContext.Citas
             .AsNoTracking()
-            .Where(cita => cita.FechaHora >= inicio &&
-                        cita.FechaHora < fin)
+            .Where(cita => cita.FechaHora >= inicioUtc &&
+                        cita.FechaHora < finUtc)
             .OrderBy(cita => cita.FechaHora)
             .ToListAsync();
     }

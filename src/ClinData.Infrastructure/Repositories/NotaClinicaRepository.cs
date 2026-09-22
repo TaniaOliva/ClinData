@@ -30,6 +30,12 @@ public class NotaClinicaRepository : INotaClinicaRepository
             .FirstOrDefaultAsync(nota => nota.Id == id);
     }
 
+    public async Task<bool> ExisteNotaParaCitaAsync(int citaId)
+    {
+        return await _dbContext.NotasClinicas
+            .AnyAsync(nota => nota.CitaId == citaId);
+    }
+
     public async Task AddAsync(NotaClinica nota)
     {
         await _dbContext.NotasClinicas.AddAsync(nota);

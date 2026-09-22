@@ -38,7 +38,7 @@ public class CitaValidator
         }
 
         // 2. No permitir citas en el pasado
-        if (dto.FechaHora <= DateTime.Now)
+        if (dto.FechaHora <= DateTime.UtcNow)
         {
             errores.Add(
                 "La cita debe programarse para una fecha y hora futura.");
@@ -46,7 +46,7 @@ public class CitaValidator
 
         // 3. Evitar cita duplicada
         if (dto.PacienteId > 0 &&
-            dto.FechaHora > DateTime.Now)
+            dto.FechaHora > DateTime.UtcNow)
         {
             var existeCita = await _citaRepository
                 .ExisteCitaMismoHorarioAsync(
