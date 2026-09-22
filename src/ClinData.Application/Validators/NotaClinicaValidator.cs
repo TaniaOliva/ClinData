@@ -46,7 +46,7 @@ public class NotaClinicaValidator
         }
 
         // 3. La cita debe haber ocurrido
-        if (cita.FechaHora > DateTime.Now)
+        if (cita.FechaHora > DateTime.UtcNow)
         {
             errores.Add(
                 "No se puede registrar una nota clínica porque la cita todavía no ha ocurrido.");
