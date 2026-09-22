@@ -6,11 +6,14 @@ namespace ClinData.Application.Validators;
 public class NotaClinicaValidator
 {
     private readonly ICitaRepository _citaRepository;
+    private readonly INotaClinicaRepository _notaClinicaRepository;
 
     public NotaClinicaValidator(
-        ICitaRepository citaRepository)
+        ICitaRepository citaRepository,
+        INotaClinicaRepository notaClinicaRepository)
     {
         _citaRepository = citaRepository;
+        _notaClinicaRepository = notaClinicaRepository;
     }
 
     public Task<List<string>> CreacionNotaClinicaAsync(
@@ -45,14 +48,21 @@ public class NotaClinicaValidator
             return errores;
         }
 
-        // 3. La cita debe haber ocurrido
+        // 3. Una cita solo puede tener una nota clínica
+        if (await _notaClinicaRepository.ExisteNotaParaCitaAsync(dto.CitaId))
+        {
+            errores.Add(
+                "La cita ya tiene una nota clínica registrada.");
+        }
+
+        // 4. La cita debe haber ocurrido
         if (cita.FechaHora > DateTime.UtcNow)
         {
             errores.Add(
                 "No se puede registrar una nota clínica porque la cita todavía no ha ocurrido.");
         }
 
-        // 4. Toda nota debe indicar quién la escribió
+        // 5. Toda nota debe indicar quién la escribió
         if (string.IsNullOrWhiteSpace(dto.RegistradaPor))
         {
             errores.Add(
