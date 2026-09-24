@@ -176,6 +176,7 @@ az webapp deploy --resource-group rg-clindata --name clindata-api-20260923215645
 # Comando par ajecutar el Deploy en un solo click
 ./scripts/deploy-api.sh
 
+
 1. hacemos build del proyecto Api
 2. Publish en carpeta publish
 3. secrea el .zip con ese publish
