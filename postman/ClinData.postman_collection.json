@@ -1,0 +1,338 @@
+{
+  "info": {
+    "_postman_id": "2b904a55-cfe9-4ad0-9bdb-c9871a987a50",
+    "name": "ClinData",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "10563609"
+  },
+  "item": [
+    {
+      "name": "Paciente Base",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\"nombres\": \"Base\",\n\"apellidos\": \"Paciente\",\n\"sexo\": \"F\",\n\"identidad\": \"0614-1999-00052\",\n\"fechaNacimiento\": \"1998-01-01T00:00:00\",\n\"telefono\": \"99999999\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://clindata-api-20260923215645.azurewebsites.net/api/pacientes",
+          "protocol": "https",
+          "host": [
+            "clindata-api-20260923215645",
+            "azurewebsites",
+            "net"
+          ],
+          "path": [
+            "api",
+            "pacientes"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "PAciente Duplicado por ID",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\"nombres\": \"Base\",\n\"apellidos\": \"Paciente\",\n\"sexo\": \"F\",\n\"identidad\": \"0614-1999-00052\",\n\"fechaNacimiento\": \"1998-01-01T00:00:00\",\n\"telefono\": \"99999999\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://clindata-api-20260923215645.azurewebsites.net/api/pacientes",
+          "protocol": "https",
+          "host": [
+            "clindata-api-20260923215645",
+            "azurewebsites",
+            "net"
+          ],
+          "path": [
+            "api",
+            "pacientes"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Cita con paciente inexistente",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\"pacienteId\": 99999999,\n\"fechaHora\": \"22-09-2026\",\n\"motivo\": \"Prueba paciente inexistente\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://clindata-api-20260923215645.azurewebsites.net/api/citas",
+          "protocol": "https",
+          "host": [
+            "clindata-api-20260923215645",
+            "azurewebsites",
+            "net"
+          ],
+          "path": [
+            "api",
+            "citas"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Nota con cita inexistente",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\"citaId\": 99999999,\n\"texto\": \"Nota inválida\",\n\"registradaPor\": \"QA\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://clindata-api-20260923215645.azurewebsites.net/api/notas",
+          "protocol": "https",
+          "host": [
+            "clindata-api-20260923215645",
+            "azurewebsites",
+            "net"
+          ],
+          "path": [
+            "api",
+            "notas"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Obtener paciente inexistente",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://clindata-api-20260923215645.azurewebsites.net/api/pacientes/99999999",
+          "protocol": "https",
+          "host": [
+            "clindata-api-20260923215645",
+            "azurewebsites",
+            "net"
+          ],
+          "path": [
+            "api",
+            "pacientes",
+            "99999999"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Obtener nota inexistente",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://clindata-api-20260923215645.azurewebsites.net/api/notas/99999999",
+          "protocol": "https",
+          "host": [
+            "clindata-api-20260923215645",
+            "azurewebsites",
+            "net"
+          ],
+          "path": [
+            "api",
+            "notas",
+            "99999999"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Citas sin fecha",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://clindata-api-20260923215645.azurewebsites.net/api/citas",
+          "protocol": "https",
+          "host": [
+            "clindata-api-20260923215645",
+            "azurewebsites",
+            "net"
+          ],
+          "path": [
+            "api",
+            "citas"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Notas de paciente inexistente",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://clindata-api-20260923215645.azurewebsites.net/api/pacientes/99999999/notas",
+          "protocol": "https",
+          "host": [
+            "clindata-api-20260923215645",
+            "azurewebsites",
+            "net"
+          ],
+          "path": [
+            "api",
+            "pacientes",
+            "99999999",
+            "notas"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Paciente 2",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\"nombres\": \"Carlos\",\n\"apellidos\": \"Argueta\",\n\"sexo\": \"M\",\n\"identidad\": \"0510-1999-00325\",\n\"fechaNacimiento\": \"1998-01-01T00:00:00\",\n\"telefono\": \"99999090\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://clindata-api-20260923215645.azurewebsites.net/api/pacientes",
+          "protocol": "https",
+          "host": [
+            "clindata-api-20260923215645",
+            "azurewebsites",
+            "net"
+          ],
+          "path": [
+            "api",
+            "pacientes"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Creacion de Cita",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"pacienteId\": 1,\n  \"fechaHora\": \"2026-10-01T09:30:00Z\",\n  \"motivo\": \"Consulta de control\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://clindata-api-20260923215645.azurewebsites.net/api/citas",
+          "protocol": "https",
+          "host": [
+            "clindata-api-20260923215645",
+            "azurewebsites",
+            "net"
+          ],
+          "path": [
+            "api",
+            "citas"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Creacion de notas",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"citaId\": 1,\n  \"texto\": \"Paciente presenta mejoria, se indica continuar tratamiento.\",\n  \"registradaPor\": \"Dra. Maria Salinas\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://clindata-api-20260923215645.azurewebsites.net/api/notas",
+          "protocol": "https",
+          "host": [
+            "clindata-api-20260923215645",
+            "azurewebsites",
+            "net"
+          ],
+          "path": [
+            "api",
+            "notas"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Creacion de Cita FechaPasada",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"pacienteId\": 1,\n  \"fechaHora\": \"2020-01-01T09:30:00Z\",\n  \"motivo\": \"Prueba fecha pasada\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://clindata-api-20260923215645.azurewebsites.net/api/citas",
+          "protocol": "https",
+          "host": [
+            "clindata-api-20260923215645",
+            "azurewebsites",
+            "net"
+          ],
+          "path": [
+            "api",
+            "citas"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
