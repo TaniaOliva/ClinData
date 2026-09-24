@@ -6,7 +6,9 @@ public interface ICitaRepository
 {
     Task<Cita?> ObtenerPorIdAsync(int id);
 
-    Task<IEnumerable<Cita>> ObtenerPorFechaAsync(DateOnly fecha);
+    Task<IEnumerable<Cita>> ObtenerEntreAsync(
+        DateTime inicioUtc,
+        DateTime finUtc);
 
     Task<bool> ExisteCitaMismoHorarioAsync(
         int pacienteId,

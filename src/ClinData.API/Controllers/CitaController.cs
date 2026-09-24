@@ -30,7 +30,7 @@ public class CitaController : ControllerBase
             return StatusCode(500, "No se pudo crear la cita.");
         }
 
-        return Created($"/api/citas/{resultado.Cita.Id}", resultado.Cita);
+        return Created($"/api/citas/{resultado.Cita.Id}", CitaRespuestaDto.DesdeEntidad(resultado.Cita));
     }
 
     [HttpGet]
@@ -44,7 +44,7 @@ public class CitaController : ControllerBase
 
         var citas = await _citaService.ObtenerPorFechaAsync(fecha.Value);
 
-        return Ok(citas);
+        return Ok(citas.Select(CitaRespuestaDto.DesdeEntidad));
     }
 
     [HttpGet("{id:int}")]
@@ -57,6 +57,6 @@ public class CitaController : ControllerBase
             return NotFound();
         }
 
-        return Ok(cita);
+        return Ok(CitaRespuestaDto.DesdeEntidad(cita));
     }
 }

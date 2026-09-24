@@ -8,6 +8,8 @@ public interface INotaClinicaRepository
 
     Task<NotaClinica?> GetByIdAsync(int id);
 
+    Task<bool> ExisteNotaParaCitaAsync(int citaId);
+
     Task AddAsync(NotaClinica nota);
 
     Task SaveChangesAsync();
