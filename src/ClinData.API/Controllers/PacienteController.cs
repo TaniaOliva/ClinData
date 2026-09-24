@@ -1,3 +1,4 @@
+using ClinData.Application.DTOs.NotasClinicas;
 using ClinData.Application.DTOs.Pacientes;
 using ClinData.Application.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -26,7 +27,9 @@ public class PacienteController : ControllerBase
             return BadRequest(new { errores });
         }
 
-        return Created($"/api/pacientes/{paciente!.Id}", paciente);
+        return Created(
+            $"/api/pacientes/{paciente!.Id}",
+            PacienteRespuestaDto.DesdeEntidad(paciente));
     }
 
     [HttpGet]
@@ -34,7 +37,7 @@ public class PacienteController : ControllerBase
     {
         var pacientes = await _pacienteService.ObtenerTodosAsync();
 
-        return Ok(pacientes);
+        return Ok(pacientes.Select(PacienteRespuestaDto.DesdeEntidad));
     }
 
     [HttpGet("{id:int}")]
@@ -47,7 +50,7 @@ public class PacienteController : ControllerBase
             return NotFound();
         }
 
-        return Ok(paciente);
+        return Ok(PacienteRespuestaDto.DesdeEntidad(paciente));
     }
 
     [HttpGet("{id:int}/notas")]
@@ -60,6 +63,6 @@ public class PacienteController : ControllerBase
             return NotFound(new { mensaje = "Paciente no encontrado." });
         }
 
-        return Ok(notas);
+        return Ok(notas.Select(NotaClinicaRespuestaDto.DesdeEntidad));
     }
 }
