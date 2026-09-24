@@ -430,3 +430,10 @@ FodyWeavers.xsd
 
 # End of file
 *.configuraciones
+
+# Local-only configuration and secret helper files (keep appsettings*.json tracked)
+**/appsettings.Local.json
+**/appsettings.*.local.json
+**/secrets.local.json
+**/.env.local
+**/.env.*.local

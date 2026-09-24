@@ -46,7 +46,7 @@ dotnet add src/ClinData.API/ClinData.API.csproj reference src/ClinData.Infrastru
 dotnet user-secrets init --project src/ClinData.API
 
 # Para hacer conexcion a Azur Data base con secrets 
-dotnet user-secrets set "ConnectionStrings:ClinDataConnection" "Server=tcp:clindata-sql-server.database.windows.net,1433;Initial Catalog=ClinDataDb;Persist Security Info=False;User ID=dbclindata;Password=TU_PASSWORD_REAL;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;" --project src/ClinData.API
+dotnet user-secrets set "ConnectionStrings:ClinData" "Server=tcp:clindata-sql-server.database.windows.net,1433;Initial Catalog=ClinDataDb;Persist Security Info=False;User ID=dbclindata;Password=TU_PASSWORD_REAL;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;" --project src/ClinData.API
 
 # Comprobando que se Guardo 
 dotnet user-secrets list --project src/ClinData.API
@@ -141,3 +141,43 @@ curl -i -X POST http://localhost:5189/api/pacientes \
 - Cada integrante configura su secreto local.
 - Si alguien cambia de red, debe re-autorizar su IP en Azure SQL.
 
+### 9. Conexion a Azure SQL sin dolor por IP dinamica
+
+Se agrego el script `scripts/connect-azure-sql-and-run.sh` para automatizar:
+
+1. Detectar tu IP publica actual.
+2. Actualizar la regla de firewall en Azure SQL.
+3. Levantar la API.
+
+Uso:
+
+```bash
+cd '/Users/salyluz/Desktop/Universidad/AV #2/ClinData'
+RESOURCE_GROUP='TU_RESOURCE_GROUP' ./scripts/connect-azure-sql-and-run.sh
+```
+
+Opcional (si quieres aplicar migraciones antes de correr):
+
+```bash
+cd '/Users/salyluz/Desktop/Universidad/AV #2/ClinData'
+RESOURCE_GROUP='TU_RESOURCE_GROUP' APPLY_MIGRATIONS='1' ./scripts/connect-azure-sql-and-run.sh
+```
+
+Requisitos:
+
+- Azure CLI instalado.
+- Sesion iniciada con `az login`.
+- User secret configurado con la clave correcta `ConnectionStrings:ClinData`.
+
+# para descargar el .zip y hacer deploy
+
+az webapp deploy --resource-group rg-clindata --name clindata-api-20260923215645 --src-path api.zip --type zip --track-status true
+
+# Comando par ajecutar el Deploy en un solo click
+./scripts/deploy-api.sh
+
+1. hacemos build del proyecto Api
+2. Publish en carpeta publish
+3. secrea el .zip con ese publish
+4. hacemos deploy a la App Service
+5. se verifica con curl la raiz / y /api/pacientes.
