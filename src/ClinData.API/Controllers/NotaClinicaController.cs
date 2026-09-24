@@ -26,7 +26,9 @@ public class NotaClinicaController : ControllerBase
             return BadRequest(new { errores });
         }
 
-        return Created($"/api/notas/{nota!.Id}", nota);
+        return Created(
+            $"/api/notas/{nota!.Id}",
+            NotaClinicaRespuestaDto.DesdeEntidad(nota));
     }
 
     [HttpGet("{id:int}")]
@@ -39,6 +41,6 @@ public class NotaClinicaController : ControllerBase
             return NotFound();
         }
 
-        return Ok(nota);
+        return Ok(NotaClinicaRespuestaDto.DesdeEntidad(nota));
     }
 }
