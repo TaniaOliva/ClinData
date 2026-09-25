@@ -1,0 +1,27 @@
+$kind: http-request
+url: "{{baseUrl}}/api/notas"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "citaId": {{citaId}},
+      "texto": "Nota sobre una cita que aun no ocurre",
+      "registradaPor": "Dra. Ana Martinez"
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('Status 400', function () {
+          pm.response.to.have.status(400);
+      });
+
+      const json = pm.response.json();
+
+      pm.test('El error menciona que la cita no ha ocurrido', function () {
+          pm.expect(json.errores.join(' ')).to.include('no ha ocurrido');
+      });
+    language: text/javascript
+order: 3000

@@ -1,0 +1,33 @@
+$kind: http-request
+url: "{{baseUrl}}/api/citas"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "pacienteId": {{pacienteId}},
+      "fechaHora": "{{fechaPasada}}",
+      "motivo": "Cita en el pasado"
+    }
+scripts:
+  - type: beforeRequest
+    code: |-
+      const pasada = new Date();
+      pasada.setDate(pasada.getDate() - 30);
+      pm.environment.set('fechaPasada', pasada.toISOString());
+    language: text/javascript
+  - type: afterResponse
+    code: |-
+      pm.test('Status 400', function () {
+          pm.response.to.have.status(400);
+      });
+
+      const json = pm.response.json();
+
+      pm.test('Devuelve un arreglo plano de errores', function () {
+          pm.expect(json).to.be.an('array').that.is.not.empty;
+      });
+    language: text/javascript
+order: 2000

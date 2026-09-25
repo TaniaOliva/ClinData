@@ -1,0 +1,27 @@
+$kind: http-request
+url: "{{baseUrl}}/api/citas"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "pacienteId": {{pacienteId}},
+      "fechaHora": "{{fechaFutura}}",
+      "motivo": "Intento de cita duplicada"
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('Status 400', function () {
+          pm.response.to.have.status(400);
+      });
+
+      const json = pm.response.json();
+
+      pm.test('El error menciona la cita duplicada', function () {
+          pm.expect(json.join(' ')).to.include('ya tiene una cita');
+      });
+    language: text/javascript
+order: 3000

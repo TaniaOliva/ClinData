@@ -1,0 +1,2 @@
+$kind: collection
+description: Coleccion de pruebas para la API de ClinData (expedientes de un consultorio medico independiente). Cubre pacientes, citas y notas clinicas, con casos validos y de error para cada regla de negocio del checklist del caso.

@@ -1,0 +1,6 @@
+name: ClinData - Local
+values:
+  - key: baseUrl
+    value: 'https://localhost:7093'
+  - key: citaIdPasada
+    value: ''

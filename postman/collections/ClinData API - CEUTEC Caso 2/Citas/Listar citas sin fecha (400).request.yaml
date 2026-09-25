@@ -1,0 +1,17 @@
+$kind: http-request
+url: "{{baseUrl}}/api/citas"
+method: GET
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('Status 400', function () {
+          pm.response.to.have.status(400);
+      });
+
+      const json = pm.response.json();
+
+      pm.test('Indica que la fecha es obligatoria', function () {
+          pm.expect(json.mensaje).to.include('fecha');
+      });
+    language: text/javascript
+order: 6000

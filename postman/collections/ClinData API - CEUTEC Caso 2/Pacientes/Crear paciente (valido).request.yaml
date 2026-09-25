@@ -1,0 +1,47 @@
+$kind: http-request
+url: "{{baseUrl}}/api/pacientes"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "nombres": "Carlos Andres",
+      "apellidos": "Mejia Flores",
+      "sexo": "M",
+      "identidad": "0801-1995-{{identidadRandom}}",
+      "fechaNacimiento": "1995-03-22",
+      "telefono": "88776655"
+    }
+scripts:
+  - type: beforeRequest
+    code: |-
+      const rand = Date.now().toString().slice(-5);
+      pm.environment.set('identidadRandom', rand);
+    language: text/javascript
+  - type: afterResponse
+    code: |-
+      pm.test('Status 201', function () {
+          pm.response.to.have.status(201);
+      });
+
+      pm.test('Trae Location en el header', function () {
+          pm.expect(pm.response.headers.has('Location')).to.be.true;
+      });
+
+      const json = pm.response.json();
+
+      pm.test('La respuesta tiene los campos esperados', function () {
+          pm.expect(json).to.have.property('id');
+          pm.expect(json).to.have.property('identidad');
+          pm.expect(json).to.have.property('nombres');
+      });
+
+      pm.test('No expone la coleccion de citas del paciente', function () {
+          pm.expect(json.citas).to.be.undefined;
+      });
+
+      pm.environment.set('pacienteId', json.id);
+    language: text/javascript
+order: 1000

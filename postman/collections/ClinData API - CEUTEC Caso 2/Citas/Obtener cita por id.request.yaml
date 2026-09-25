@@ -1,0 +1,17 @@
+$kind: http-request
+url: "{{baseUrl}}/api/citas/{{citaId}}"
+method: GET
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('Status 200', function () {
+          pm.response.to.have.status(200);
+      });
+
+      const json = pm.response.json();
+
+      pm.test('Devuelve la cita correcta', function () {
+          pm.expect(json.id).to.eql(Number(pm.environment.get('citaId')));
+      });
+    language: text/javascript
+order: 5000

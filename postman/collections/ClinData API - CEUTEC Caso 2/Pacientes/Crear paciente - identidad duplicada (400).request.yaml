@@ -1,0 +1,31 @@
+$kind: http-request
+url: "{{baseUrl}}/api/pacientes"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "nombres": "Carlos Andres",
+      "apellidos": "Mejia Flores",
+      "sexo": "M",
+      "identidad": "0801-1995-{{identidadRandom}}",
+      "fechaNacimiento": "1995-03-22",
+      "telefono": "88776655"
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('Status 400', function () {
+          pm.response.to.have.status(400);
+      });
+
+      const json = pm.response.json();
+
+      pm.test('El error viene envuelto en errores', function () {
+          pm.expect(json.errores).to.be.an('array');
+          pm.expect(json.errores.join(' ')).to.include('identidad');
+      });
+    language: text/javascript
+order: 2000
