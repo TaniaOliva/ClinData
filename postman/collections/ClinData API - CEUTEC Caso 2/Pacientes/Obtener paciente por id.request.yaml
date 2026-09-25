@@ -1,0 +1,21 @@
+$kind: http-request
+url: "{{baseUrl}}/api/pacientes/{{pacienteId}}"
+method: GET
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('Status 200', function () {
+          pm.response.to.have.status(200);
+      });
+
+      const json = pm.response.json();
+
+      pm.test('Devuelve el paciente correcto', function () {
+          pm.expect(json.id).to.eql(Number(pm.environment.get('pacienteId')));
+      });
+
+      pm.test('No expone la coleccion de citas del paciente', function () {
+          pm.expect(json.citas).to.be.undefined;
+      });
+    language: text/javascript
+order: 5000

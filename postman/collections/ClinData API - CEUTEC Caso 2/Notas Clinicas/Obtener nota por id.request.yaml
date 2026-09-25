@@ -1,0 +1,21 @@
+$kind: http-request
+url: "{{baseUrl}}/api/notas/{{notaId}}"
+method: GET
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('Status 200', function () {
+          pm.response.to.have.status(200);
+      });
+
+      const json = pm.response.json();
+
+      pm.test('Devuelve la nota correcta', function () {
+          pm.expect(json.id).to.eql(Number(pm.environment.get('notaId')));
+      });
+
+      pm.test('No expone la cita anidada', function () {
+          pm.expect(json.cita).to.be.undefined;
+      });
+    language: text/javascript
+order: 4000

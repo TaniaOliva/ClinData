@@ -437,3 +437,6 @@ FodyWeavers.xsd
 **/secrets.local.json
 **/.env.local
 **/.env.*.local
+
+# Postman workspace sync metadata (local only)
+.postman/

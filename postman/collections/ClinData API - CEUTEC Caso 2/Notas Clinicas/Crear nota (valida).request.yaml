@@ -1,0 +1,35 @@
+$kind: http-request
+url: "{{baseUrl}}/api/notas"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "citaId": {{citaIdPasada}},
+      "texto": "Paciente evoluciona favorablemente. Se indica continuar tratamiento.",
+      "registradaPor": "Dra. Ana Martinez"
+    }
+scripts:
+  - type: beforeRequest
+    code: |-
+      if (!pm.environment.get('citaIdPasada')) {
+          console.warn('Configura la variable citaIdPasada con el id de una cita ya ocurrida y sin nota antes de correr esta carpeta.');
+      }
+    language: text/javascript
+  - type: afterResponse
+    code: |-
+      pm.test('Status 201', function () {
+          pm.response.to.have.status(201);
+      });
+
+      const json = pm.response.json();
+
+      pm.test('No expone la cita anidada', function () {
+          pm.expect(json.cita).to.be.undefined;
+      });
+
+      pm.environment.set('notaId', json.id);
+    language: text/javascript
+order: 1000

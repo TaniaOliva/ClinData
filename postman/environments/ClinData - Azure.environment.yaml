@@ -1,0 +1,6 @@
+name: ClinData - Azure
+values:
+  - key: baseUrl
+    value: 'https://clindata-api-20260923215645.azurewebsites.net'
+  - key: citaIdPasada
+    value: ''

@@ -1,0 +1,33 @@
+$kind: http-request
+url: "{{baseUrl}}/api/citas?fecha={{fechaConsulta}}"
+method: GET
+queryParams:
+  fecha: "{{fechaConsulta}}"
+scripts:
+  - type: beforeRequest
+    code: |-
+      const futura = new Date(pm.environment.get('fechaFutura'));
+      const horaHonduras = new Date(futura.getTime() - (6 * 60 * 60 * 1000));
+      const yyyy = horaHonduras.getUTCFullYear();
+      const mm = String(horaHonduras.getUTCMonth() + 1).padStart(2, '0');
+      const dd = String(horaHonduras.getUTCDate()).padStart(2, '0');
+      pm.environment.set('fechaConsulta', `${yyyy}-${mm}-${dd}`);
+    language: text/javascript
+  - type: afterResponse
+    code: |-
+      pm.test('Status 200', function () {
+          pm.response.to.have.status(200);
+      });
+
+      const json = pm.response.json();
+
+      pm.test('La respuesta es un arreglo', function () {
+          pm.expect(json).to.be.an('array');
+      });
+
+      pm.test('Incluye la cita creada en este dia', function () {
+          const ids = json.map(c => c.id);
+          pm.expect(ids).to.include(Number(pm.environment.get('citaId')));
+      });
+    language: text/javascript
+order: 4000

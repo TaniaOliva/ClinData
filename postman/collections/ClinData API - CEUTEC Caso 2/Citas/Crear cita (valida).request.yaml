@@ -1,0 +1,41 @@
+$kind: http-request
+url: "{{baseUrl}}/api/citas"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "pacienteId": {{pacienteId}},
+      "fechaHora": "{{fechaFutura}}",
+      "motivo": "Control de rutina"
+    }
+scripts:
+  - type: beforeRequest
+    code: |-
+      const futura = new Date();
+      futura.setDate(futura.getDate() + 30);
+      pm.environment.set('fechaFutura', futura.toISOString());
+    language: text/javascript
+  - type: afterResponse
+    code: |-
+      pm.test('Status 201', function () {
+          pm.response.to.have.status(201);
+      });
+
+      const json = pm.response.json();
+
+      pm.test('La respuesta tiene los campos esperados', function () {
+          pm.expect(json).to.have.property('id');
+          pm.expect(json).to.have.property('estado');
+      });
+
+      pm.test('No expone paciente ni notas anidadas', function () {
+          pm.expect(json.paciente).to.be.undefined;
+          pm.expect(json.notasClinicas).to.be.undefined;
+      });
+
+      pm.environment.set('citaId', json.id);
+    language: text/javascript
+order: 1000

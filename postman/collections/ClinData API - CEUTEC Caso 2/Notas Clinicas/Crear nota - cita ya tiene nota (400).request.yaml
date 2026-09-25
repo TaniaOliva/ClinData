@@ -1,0 +1,27 @@
+$kind: http-request
+url: "{{baseUrl}}/api/notas"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "citaId": {{citaIdPasada}},
+      "texto": "Paciente evoluciona favorablemente. Se indica continuar tratamiento.",
+      "registradaPor": "Dra. Ana Martinez"
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('Status 400', function () {
+          pm.response.to.have.status(400);
+      });
+
+      const json = pm.response.json();
+
+      pm.test('El error menciona la nota duplicada', function () {
+          pm.expect(json.errores.join(' ')).to.include('ya tiene una nota');
+      });
+    language: text/javascript
+order: 2000
