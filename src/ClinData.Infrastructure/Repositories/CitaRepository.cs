@@ -32,6 +32,14 @@ public class CitaRepository : ICitaRepository
             .ToListAsync();
     }
 
+    public async Task<IEnumerable<Cita>> ObtenerTodasAsync()
+    {
+        return await _dbContext.Citas
+            .AsNoTracking()
+            .OrderBy(cita => cita.FechaHora)
+            .ToListAsync();
+    }
+
     public async Task AgregarAsync(Cita cita)
     {
         await _dbContext.Citas.AddAsync(cita);

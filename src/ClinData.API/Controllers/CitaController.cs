@@ -37,12 +37,10 @@ public class CitaController : ControllerBase
     public async Task<IActionResult> ObtenerPorFecha(
         [FromQuery] DateOnly? fecha)
     {
-        if (fecha is null)
-        {
-            return BadRequest(new { mensaje = "La fecha es obligatoria." });
-        }
-
-        var citas = await _citaService.ObtenerPorFechaAsync(fecha.Value);
+        // Sin fecha se listan todas las citas creadas, en vez de exigir el filtro.
+        var citas = fecha is null
+            ? await _citaService.ObtenerTodasAsync()
+            : await _citaService.ObtenerPorFechaAsync(fecha.Value);
 
         return Ok(citas.Select(CitaRespuestaDto.DesdeEntidad));
     }

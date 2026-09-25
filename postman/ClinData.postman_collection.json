@@ -73,7 +73,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\n\"pacienteId\": 99999999,\n\"fechaHora\": \"22-09-2026\",\n\"motivo\": \"Prueba paciente inexistente\"\n}",
+          "raw": "{\n\"pacienteId\": 99999999,\n\"fechaHora\": \"2026-09-22T09:00:00Z\",\n\"motivo\": \"Prueba paciente inexistente\"\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -171,7 +171,7 @@
       "response": []
     },
     {
-      "name": "Citas sin fecha",
+      "name": "Listar todas las citas (sin fecha)",
       "request": {
         "method": "GET",
         "header": [],

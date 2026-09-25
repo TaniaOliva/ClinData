@@ -10,6 +10,8 @@ public interface ICitaRepository
         DateTime inicioUtc,
         DateTime finUtc);
 
+    Task<IEnumerable<Cita>> ObtenerTodasAsync();
+
     Task<bool> ExisteCitaMismoHorarioAsync(
         int pacienteId,
         DateTime fechaHora);

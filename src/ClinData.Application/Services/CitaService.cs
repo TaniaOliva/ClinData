@@ -68,6 +68,11 @@ public class CitaService
         return await _citaRepository.ObtenerEntreAsync(inicioUtc, finUtc);
     }
 
+    public async Task<IEnumerable<Cita>> ObtenerTodasAsync()
+    {
+        return await _citaRepository.ObtenerTodasAsync();
+    }
+
     private static DateTime NormalizarAUtc(DateTime fechaHora)
     {
         return fechaHora.Kind switch
